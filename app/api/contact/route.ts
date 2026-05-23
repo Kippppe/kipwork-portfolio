@@ -80,24 +80,41 @@ export async function POST(request: Request) {
       }),
     });
 
-    const data = (await res.json()) as { success?: boolean; message?: string };
+    const raw = await res.text();
+    let data: { success?: boolean; message?: string } = {};
+    try {
+      data = JSON.parse(raw);
+    } catch {
+      // Web3Forms が JSON 以外（HTMLエラー等）を返したケース
+    }
 
     if (!res.ok || !data.success) {
+      // Vercel の Runtime Logs に上流の実エラーを残す（診断用）
+      console.error(
+        "[contact] web3forms rejected:",
+        "status=",
+        res.status,
+        "message=",
+        data.message ?? raw.slice(0, 300),
+      );
       return Response.json(
         {
           success: false,
           message: "送信に失敗しました。お手数ですがメールでご連絡ください。",
+          detail: data.message ?? `upstream ${res.status}`,
         },
         { status: 502 },
       );
     }
 
     return Response.json({ success: true, message: "送信しました。" });
-  } catch {
+  } catch (err) {
+    console.error("[contact] fetch threw:", err);
     return Response.json(
       {
         success: false,
         message: "送信に失敗しました。お手数ですがメールでご連絡ください。",
+        detail: err instanceof Error ? err.message : "unknown error",
       },
       { status: 502 },
     );

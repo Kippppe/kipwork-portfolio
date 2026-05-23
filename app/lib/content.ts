@@ -2,7 +2,7 @@
 // Day5でHeroのポジショニングとProofを精緻化する想定。
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://kipwork.dev";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kipwork.jp";
 
 export const CONTACT_EMAIL = "kippeifujita81@gmail.com";
 

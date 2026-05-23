@@ -30,7 +30,11 @@ export default function Contact() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const data = (await res.json()) as { success: boolean; message: string };
+      const data = (await res.json()) as {
+        success: boolean;
+        message: string;
+        detail?: string;
+      };
 
       if (res.ok && data.success) {
         setStatus("success");
@@ -38,7 +42,11 @@ export default function Contact() {
         form.reset();
       } else {
         setStatus("error");
-        setFeedback(data.message || "送信に失敗しました。");
+        // 診断用: 上流(Web3Forms)の実エラー文を画面に出す。原因特定後に detail 連結は外してよい。
+        setFeedback(
+          (data.message || "送信に失敗しました。") +
+            (data.detail ? `（詳細: ${data.detail}）` : ""),
+        );
       }
     } catch {
       setStatus("error");
