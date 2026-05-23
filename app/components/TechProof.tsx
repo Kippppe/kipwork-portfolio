@@ -1,4 +1,5 @@
 import { techProof } from "../lib/content";
+import ShotImage from "./ShotImage";
 
 // Lighthouse 風スコアドーナツ。値で色を出し分け（≥90 緑 / 50-89 橙 / <50 赤）。
 function ScoreDonut({ label, value }: { label: string; value: number }) {
@@ -181,11 +182,9 @@ export default function TechProof() {
                   {star.count} 件検出 · {star.highlight}
                 </span>
               </div>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <ShotImage
                 src={star.img}
                 alt={`validator.schema.org ${star.path} の検出結果（${star.count}件・エラー0警告0）`}
-                className="w-full"
               />
             </figure>
           )}
@@ -204,11 +203,9 @@ export default function TechProof() {
                     {p.count} 件 · {p.highlight}
                   </span>
                 </div>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <ShotImage
                   src={p.img}
                   alt={`validator.schema.org ${p.path} の検出結果（${p.count}件・エラー0警告0）`}
-                  className="w-full"
                 />
               </figure>
             ))}
