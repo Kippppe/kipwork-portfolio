@@ -21,6 +21,7 @@ export const brand = {
 
 export const nav = [
   { href: "#case", label: "実績" },
+  { href: "#proof", label: "技術力" },
   { href: "#about", label: "About" },
   { href: "#contact", label: "相談する" },
 ];
@@ -68,6 +69,85 @@ export const caseStudy = {
   },
   validation:
     "validator.schema.org（対象 /en）で検証 → エラー0・警告0。NAP（名称・住所・電話）をサイト構造化データと一致させ、検索・地図・AI 各面の整合を確保。",
+};
+
+// 技術力証明セクション（Day4）。主張ではなく「第三者が再現できる検証可能性」で示す。
+// 数値・型はすべて実測（validator.schema.org / PageSpeed Insights）。捏造なし。
+export const techProof = {
+  eyebrow: "技術力証明 / Proof",
+  title: "主張ではなく、検証可能性で示す。",
+  lead:
+    "下記の証拠はすべて公開ソースとライブ検証ツールで第三者が再確認できます。スクリーンショットは結果、リンクはその再現手段です。",
+
+  schema: {
+    title: "Schema.org 構造化データ — 全ページ エラー0・警告0",
+    body:
+      "JSON-LD で7型を宣言し、全ページを validator.schema.org で検証。3ページとも エラー0・警告0で通過しています。",
+    // 「カード6個では？」という几帳面な相手を先回りで封じるキャプション。
+    caption:
+      "JSON-LD で7型を宣言（WebSite / Hotel / LodgingBusiness / Restaurant / BreadcrumbList / HotelRoom / FAQPage）。validator はカード表示で LodgingBusiness を Hotel のサブタイプに統合するため、表示上は6種になります。",
+    pages: [
+      {
+        path: "/room",
+        count: 12,
+        highlight: "HotelRoom ×8 + BreadcrumbList",
+        img: "/proof/schema-room.png",
+        star: true,
+      },
+      {
+        path: "/en",
+        count: 3,
+        highlight: "WebSite / Hotel / Restaurant",
+        img: "/proof/schema-en.png",
+        star: false,
+      },
+      {
+        path: "/faq",
+        count: 4,
+        highlight: "+ FAQPage",
+        img: "/proof/schema-faq.png",
+        star: false,
+      },
+    ],
+    verify: [
+      {
+        label: "Rich Results Test で再検証",
+        href: "https://search.google.com/test/rich-results?url=https%3A%2F%2Fotherspacehotel.com%2Fen",
+      },
+      {
+        label: "Schema Markup Validator（/room）",
+        href: "https://validator.schema.org/#url=https%3A%2F%2Fotherspacehotel.com%2Froom",
+      },
+    ],
+    self:
+      "このポートフォリオ自身も ProfessionalService 型で構造化済み（View Source で確認可）。",
+  },
+
+  hreflang: {
+    title: "hreflang — 5言語 + x-default を全ページ相互リンク",
+    body:
+      "ロケール接頭辞ルーティング（/en /ja /ko /zh-CN /zh-TW）。各ページが x-default を含む全ロケールを相互参照し、検索エンジンに言語シグナルを明示します。",
+    locales: ["x-default", "en", "ja", "ko", "zh-CN", "zh-TW"],
+    // 実装パターン（実機は View Source で確認可）。
+    code: `<link rel="alternate" hreflang="x-default" href="https://otherspacehotel.com/en" />
+<link rel="alternate" hreflang="en"        href="https://otherspacehotel.com/en" />
+<link rel="alternate" hreflang="ja"        href="https://otherspacehotel.com/ja" />
+<link rel="alternate" hreflang="ko"        href="https://otherspacehotel.com/ko" />
+<link rel="alternate" hreflang="zh-CN"     href="https://otherspacehotel.com/zh-CN" />
+<link rel="alternate" hreflang="zh-TW"     href="https://otherspacehotel.com/zh-TW" />`,
+  },
+
+  // 差別化軸＝検索。Lighthouse は検索最適化に直結する SEO / Best Practices のみ掲示。
+  metrics: {
+    title: "Lighthouse — 検索最適化カテゴリ",
+    target: "otherspacehotel.com（モバイル・PageSpeed Insights 実測）",
+    items: [
+      { label: "SEO", value: 100 },
+      { label: "Best Practices", value: 96 },
+    ],
+    note:
+      "構造化データ・メタ・hreflang の最適化を、検索に直結する SEO 100 / Best Practices 96 で裏付け。PageSpeed Insights で誰でも再計測できます。",
+  },
 };
 
 export const about = {
