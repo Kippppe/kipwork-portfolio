@@ -9,11 +9,16 @@ export default function ShotImage({ src, alt }: { src: string; alt: string }) {
 
   if (err) {
     return (
-      <div className="flex items-center justify-center gap-1.5 px-4 py-9 text-center text-xs text-stone-400">
-        <span aria-hidden className="text-teal-600">
+      <div className="flex flex-col items-center justify-center gap-1 px-4 py-10 text-center">
+        <span aria-hidden className="text-2xl leading-none text-teal-600">
           ✓
         </span>
-        validator.schema.org — エラー0 / 警告0（スクリーンショット準備中）
+        <span className="text-sm font-semibold text-stone-700">
+          エラー 0 / 警告 0
+        </span>
+        <span className="text-[11px] text-stone-400">
+          validator.schema.org で検証
+        </span>
       </div>
     );
   }

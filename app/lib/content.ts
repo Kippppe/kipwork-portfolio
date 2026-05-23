@@ -88,7 +88,7 @@ export const techProof = {
       "JSON-LD で7型を宣言（WebSite / Hotel / LodgingBusiness / Restaurant / BreadcrumbList / HotelRoom / FAQPage）。validator はカード表示で LodgingBusiness を Hotel のサブタイプに統合するため、表示上は6種になります。",
     pages: [
       {
-        path: "/room",
+        path: "/en/room",
         count: 12,
         highlight: "HotelRoom ×8 + BreadcrumbList",
         img: "/proof/schema-room.png",
@@ -102,7 +102,7 @@ export const techProof = {
         star: false,
       },
       {
-        path: "/faq",
+        path: "/en/faq",
         count: 4,
         highlight: "+ FAQPage",
         img: "/proof/schema-faq.png",
@@ -111,12 +111,12 @@ export const techProof = {
     ],
     verify: [
       {
-        label: "Rich Results Test で再検証",
+        label: "Rich Results Test で再検証（/en）",
         href: "https://search.google.com/test/rich-results?url=https%3A%2F%2Fotherspacehotel.com%2Fen",
       },
       {
-        label: "Schema Markup Validator（/room）",
-        href: "https://validator.schema.org/#url=https%3A%2F%2Fotherspacehotel.com%2Froom",
+        label: "Schema Markup Validator（/en/room）",
+        href: "https://validator.schema.org/#url=https%3A%2F%2Fotherspacehotel.com%2Fen%2Froom",
       },
     ],
     self:
