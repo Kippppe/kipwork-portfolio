@@ -6,6 +6,13 @@ export const SITE_URL =
 
 export const CONTACT_EMAIL = "kippeifujita81@gmail.com";
 
+// Web3Forms の公開アクセスキー（Web3Forms 側で「This is a public key」と明記された公開前提のキー）。
+// クライアントから直接 api.web3forms.com に送信する。env を設定すればそちらを優先。
+// キー変更/失効は Web3Forms ダッシュボードからいつでも可能。
+export const WEB3FORMS_ACCESS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ??
+  "2b40ee94-8941-4fee-8d9f-0ddff7c3d419";
+
 export const brand = {
   name: "kip",
   role: "ホテル特化・多言語サイト / Schema 実装",

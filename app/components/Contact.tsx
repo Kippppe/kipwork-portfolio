@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { contact } from "../lib/content";
+import { contact, brand, WEB3FORMS_ACCESS_KEY } from "../lib/content";
 
 type Status = "idle" | "submitting" | "success" | "error";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function Contact() {
   const [status, setStatus] = useState<Status>("idle");
@@ -11,30 +13,59 @@ export default function Contact() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+
+    const name = String(fd.get("name") ?? "").trim();
+    const email = String(fd.get("email") ?? "").trim();
+    const company = String(fd.get("company") ?? "").trim();
+    const message = String(fd.get("message") ?? "").trim();
+    const botcheck = String(fd.get("botcheck") ?? "");
+
+    // ハニーポット: 値が入っていれば送信せず成功扱いで捨てる
+    if (botcheck) {
+      setStatus("success");
+      setFeedback("送信しました。2営業日以内にご返信します。");
+      form.reset();
+      return;
+    }
+
+    if (!name || !email || !message) {
+      setStatus("error");
+      setFeedback("お名前・メール・ご相談内容は必須です。");
+      return;
+    }
+    if (!EMAIL_RE.test(email)) {
+      setStatus("error");
+      setFeedback("メールアドレスの形式が正しくありません。");
+      return;
+    }
+
     setStatus("submitting");
     setFeedback("");
 
-    const form = e.currentTarget;
-    const fd = new FormData(form);
-    const payload = {
-      name: String(fd.get("name") ?? ""),
-      email: String(fd.get("email") ?? ""),
-      company: String(fd.get("company") ?? ""),
-      message: String(fd.get("message") ?? ""),
-      botcheck: String(fd.get("botcheck") ?? ""),
-    };
-
     try {
-      const res = await fetch("/api/contact", {
+      // Web3Forms へブラウザから直接送信（サーバー経由だと Cloudflare に 403 で弾かれるため）
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `【ポートフォリオ問い合わせ】${name} 様${
+            company ? `（${company}）` : ""
+          }`,
+          from_name: `${brand.name} ポートフォリオ`,
+          replyto: email,
+          name,
+          email,
+          company: company || "(未記入)",
+          message,
+        }),
       });
-      const data = (await res.json()) as {
-        success: boolean;
-        message: string;
-        detail?: string;
-      };
+      const data = (await res.json()) as { success: boolean; message: string };
 
       if (res.ok && data.success) {
         setStatus("success");
@@ -42,10 +73,8 @@ export default function Contact() {
         form.reset();
       } else {
         setStatus("error");
-        // 診断用: 上流(Web3Forms)の実エラー文を画面に出す。原因特定後に detail 連結は外してよい。
         setFeedback(
-          (data.message || "送信に失敗しました。") +
-            (data.detail ? `（詳細: ${data.detail}）` : ""),
+          `送信に失敗しました（${data.message || res.status}）。お手数ですがメールでご連絡ください。`,
         );
       }
     } catch {
