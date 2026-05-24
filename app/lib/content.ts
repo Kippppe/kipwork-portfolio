@@ -30,14 +30,16 @@ export const hero = {
   eyebrow: "ホテル特化・多言語サイト実装",
   headline:
     "訪日インバウンドで“見つかる・伝わる・予約される”ホテルサイトを実装します。",
+  // Day5 確定: 本文＝代理店（買い手）への適合性＋スコープ＋差別化（70字）。成果はheadlineが担うため非重複。
   subhead:
-    "Next.js × Schema.org Hotel × hreflang。EN / JA / KO / 簡体 / 繁体の多言語実装と、検索・地図・AI に最適化した構造化データを、ホテル現場運用の視点で組み立てます。",
+    "Web制作代理店の黒子として、ホテルの多言語サイトとSchema・MEOを実装。検索・地図・AIに効く構造を、現場運用の視点で組み立てます。",
+  // Day5 確定: proof 5本 各15字以内。on-axisで強く自己検証可能なもののみ。
   proof: [
-    "Schema.org 7型 検証0エラー",
-    "5言語 hreflang 完全対応",
-    "Next.js App Router 実装",
-    "GBP 多言語 MEO 運用",
-    "ホテルフロント実務経験",
+    "Schema7型・0エラー",
+    "hreflang 5言語対応",
+    "Next.js+AIO構造",
+    "GBP多言語MEO運用",
+    "ホテルフロント実務",
   ],
   primaryCta: { label: "実装の相談をする", href: "#contact" },
   secondaryCta: { label: "実績を見る", href: "#case" },
