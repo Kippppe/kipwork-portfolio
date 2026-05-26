@@ -1,16 +1,35 @@
+"use client";
+
 import { brand, nav } from "../lib/content";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Nav() {
+  const { scrollY } = useScroll();
+  const bg = useTransform(scrollY, [0, 120], ["rgba(10,10,10,0.0)", "rgba(10,10,10,0.7)"]);
+  const blur = useTransform(scrollY, [0, 120], ["blur(0px)", "blur(14px)"]);
+  const border = useTransform(scrollY, [0, 120], ["rgba(255,255,255,0)", "rgba(255,255,255,0.08)"]);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-background/85 backdrop-blur-md">
-      <nav className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-6">
+    <motion.header
+      className="fixed top-0 z-50 w-full"
+      style={{
+        backgroundColor: bg,
+        backdropFilter: blur,
+        WebkitBackdropFilter: blur,
+        borderBottom: "1px solid",
+        borderBottomColor: border,
+      }}
+    >
+      <nav className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
         <a
           href="#top"
-          className="text-lg font-semibold tracking-tight text-stone-900"
+          className="font-display flex items-center gap-2 text-lg font-bold tracking-tight text-[color:var(--foreground)]"
         >
-          {brand.name}
-          <span className="ml-2 hidden text-sm font-normal text-stone-500 sm:inline">
-            {brand.role}
+          <span className="grid h-8 w-8 place-items-center rounded-full border border-white/20 bg-white/5 text-base">
+            {brand.initials}
+          </span>
+          <span className="hidden text-sm font-medium text-[color:var(--muted)] sm:inline">
+            kipwork
           </span>
         </a>
         <ul className="flex items-center gap-1 sm:gap-2">
@@ -18,7 +37,7 @@ export default function Nav() {
             <li key={item.href}>
               <a
                 href={item.href}
-                className="rounded-full px-3 py-2 text-sm font-medium text-stone-600 transition-colors hover:bg-stone-100 hover:text-stone-900"
+                className="rounded-full px-3 py-2 text-sm font-medium text-[color:var(--muted)] transition-colors hover:text-[color:var(--foreground)]"
               >
                 {item.label}
               </a>
@@ -26,6 +45,6 @@ export default function Nav() {
           ))}
         </ul>
       </nav>
-    </header>
+    </motion.header>
   );
 }

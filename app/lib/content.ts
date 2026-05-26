@@ -1,50 +1,115 @@
 // 単一情報源（Single source of truth）— コピーはここを編集すれば全セクションに反映される。
-// Day5でHeroのポジショニングとProofを精緻化する想定。
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.kipwork.jp";
 
 export const CONTACT_EMAIL = "kippeifujita81@gmail.com";
 
-// Web3Forms の公開アクセスキー（Web3Forms 側で「This is a public key」と明記された公開前提のキー）。
-// クライアントから直接 api.web3forms.com に送信する。env を設定すればそちらを優先。
-// キー変更/失効は Web3Forms ダッシュボードからいつでも可能。
+// Web3Forms 公開アクセスキー
 export const WEB3FORMS_ACCESS_KEY =
   process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ??
   "2b40ee94-8941-4fee-8d9f-0ddff7c3d419";
 
 export const brand = {
   name: "kip",
+  initials: "K",
   role: "ホテル特化・多言語サイト / Schema 実装",
   tagline: "ホテルの現場が分かる、多言語実装エンジニア。",
 };
 
-export const nav = [
-  { href: "#case", label: "実績" },
-  { href: "#proof", label: "技術力" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "相談する" },
-];
-
-export const hero = {
-  eyebrow: "ホテル特化・多言語サイト実装",
-  headline:
-    "訪日インバウンドで“見つかる・伝わる・予約される”ホテルサイトを実装します。",
-  // Day5 確定: 本文＝代理店（買い手）への適合性＋スコープ＋差別化（70字）。成果はheadlineが担うため非重複。
-  subhead:
-    "Web制作代理店の黒子として、ホテルの多言語サイトとSchema・MEOを実装。検索・地図・AIに効く構造を、現場運用の視点で組み立てます。",
-  // Day5 確定: proof 5本 各15字以内。on-axisで強く自己検証可能なもののみ。
-  proof: [
-    "Schema7型・0エラー",
-    "hreflang 5言語対応",
-    "Next.js+AIO構造",
-    "GBP多言語MEO運用",
-    "ホテルフロント実務",
-  ],
-  primaryCta: { label: "実装の相談をする", href: "#contact" },
-  secondaryCta: { label: "実績を見る", href: "#case" },
+// SNS / 外部リンク（差し替えてください）
+export const social = {
+  github: "https://github.com/Kippppe",
+  x: "https://x.com/kipwork_jp",
+  note: "https://note.com/kipwork_0107",
+  linkedin: "", // 空ならフッターから自動で除外
 };
 
+export const nav = [
+  { href: "#about", label: "About" },
+  { href: "#work", label: "Work" },
+  { href: "#experience", label: "Experience" },
+  { href: "#connect", label: "Contact" },
+];
+
+// HERO ─ 大胆タイポでホテル特化×代理店黒子を打ち出す
+export const hero = {
+  eyebrow: "Hotel-specialized · Multilingual web",
+  headlineEn: [
+    "I build",
+    "multilingual hotel sites",
+    "that get found.",
+  ],
+  headlineJa:
+    "ホテルの現場が分かる、多言語実装エンジニア。",
+  subhead:
+    "Web制作代理店の黒子として、ホテルの多言語サイトと Schema・MEO を実装。検索・地図・AI に効く構造を、現場運用の視点で組み立てます。",
+  proof: [
+    "Schema 7型 0エラー",
+    "hreflang 5言語",
+    "Next.js + AIO構造",
+    "GBP 多言語MEO",
+    "ホテルフロント実務",
+  ],
+  primaryCta: { label: "実装の相談をする", href: "#connect" },
+  secondaryCta: { label: "実績を見る", href: "#work" },
+};
+
+// ABOUT
+export const about = {
+  eyebrow: "About",
+  title: "ホテル現場とコードを\n両方知っている、数少ない実装者。",
+  // /public/me.jpg にファイルを置けば自動で表示される
+  portrait: "/me.jpg",
+  body: [
+    "現職で浅草のホテル（OTHER SPACE Asakusa）の Web / SEO / オペレーションを担当。フロント実務を通じて、多言語ゲスト対応・予約導線・OTA と直予約の現実を肌で理解しています。",
+    "翻訳屋でも純粋なエンジニアでもありません。両方の言語を持つから、検索とブランドの両面で効く実装に落とし込めます。",
+    "Web制作代理店の黒子として、貴社ブランドの裏側で多言語/構造化の実装部分を担います。",
+  ],
+  skills: [
+    "Next.js",
+    "TypeScript",
+    "App Router",
+    "Tailwind",
+    "Schema.org",
+    "hreflang",
+    "JSON-LD",
+    "GBP / MEO",
+    "GA4",
+    "Vercel",
+    "Cloudflare",
+    "i18n (EN/JA/KO/zh-CN/zh-TW)",
+    "Hotel ops",
+    "Front desk",
+  ],
+};
+
+// WORK
+export const work = {
+  eyebrow: "Selected Work",
+  title: "実装実績",
+  projects: [
+    {
+      slug: "otherspace",
+      title: "OTHER SPACE Asakusa",
+      subtitle: "多言語ホテルサイト実装（5言語 / Schema 7型）",
+      year: "2025",
+      role: "Web / SEO / 実装",
+      cover: "/work/otherspace.jpg",
+      tech: ["Next.js", "App Router", "Schema.org", "hreflang", "tripla"],
+      stats: [
+        { value: "5", label: "言語" },
+        { value: "7", label: "Schema型" },
+        { value: "0", label: "Validatorエラー" },
+      ],
+      url: "https://otherspacehotel.com",
+      summary:
+        "94室のブティックホテル向けに Next.js (App Router) で5言語サイトを実装。Schema.org 7タイプを検証エラー0で全ページ展開、hreflang で訪日インバウンドの多言語導線を整備。",
+    },
+  ],
+};
+
+// 既存セクション参照用に残す
 export const caseStudy = {
   eyebrow: "実装実績 / Case Study",
   title: "OTHER SPACE Asakusa — 多言語ホテルサイト実装",
@@ -73,64 +138,33 @@ export const caseStudy = {
     "validator.schema.org（対象 /en）で検証 → エラー0・警告0。NAP（名称・住所・電話）をサイト構造化データと一致させ、検索・地図・AI 各面の整合を確保。",
 };
 
-// 技術力証明セクション（Day4）。主張ではなく「第三者が再現できる検証可能性」で示す。
-// 数値・型はすべて実測（validator.schema.org / PageSpeed Insights）。捏造なし。
 export const techProof = {
-  eyebrow: "技術力証明 / Proof",
+  eyebrow: "Proof",
   title: "主張ではなく、検証可能性で示す。",
   lead:
     "下記の証拠はすべて公開ソースとライブ検証ツールで第三者が再確認できます。スクリーンショットは結果、リンクはその再現手段です。",
-
   schema: {
-    title: "Schema.org 構造化データ — 全ページ エラー0・警告0",
+    title: "Schema.org — 全ページ エラー0・警告0",
     body:
       "JSON-LD で7型を宣言し、全ページを validator.schema.org で検証。3ページとも エラー0・警告0で通過しています。",
-    // 「カード6個では？」という几帳面な相手を先回りで封じるキャプション。
     caption:
       "JSON-LD で7型を宣言（WebSite / Hotel / LodgingBusiness / Restaurant / BreadcrumbList / HotelRoom / FAQPage）。validator はカード表示で LodgingBusiness を Hotel のサブタイプに統合するため、表示上は6種になります。",
     pages: [
-      {
-        path: "/en/room",
-        count: 12,
-        highlight: "HotelRoom ×8 + BreadcrumbList",
-        img: "/proof/schema-room.png",
-        star: true,
-      },
-      {
-        path: "/en",
-        count: 3,
-        highlight: "WebSite / Hotel / Restaurant",
-        img: "/proof/schema-en.png",
-        star: false,
-      },
-      {
-        path: "/en/faq",
-        count: 4,
-        highlight: "+ FAQPage",
-        img: "/proof/schema-faq.png",
-        star: false,
-      },
+      { path: "/en/room", count: 12, highlight: "HotelRoom ×8 + BreadcrumbList", img: "/proof/schema-room.png", star: true },
+      { path: "/en", count: 3, highlight: "WebSite / Hotel / Restaurant", img: "/proof/schema-en.png", star: false },
+      { path: "/en/faq", count: 4, highlight: "+ FAQPage", img: "/proof/schema-faq.png", star: false },
     ],
     verify: [
-      {
-        label: "Rich Results Test で再検証（/en）",
-        href: "https://search.google.com/test/rich-results?url=https%3A%2F%2Fotherspacehotel.com%2Fen",
-      },
-      {
-        label: "Schema Markup Validator（/en/room）",
-        href: "https://validator.schema.org/#url=https%3A%2F%2Fotherspacehotel.com%2Fen%2Froom",
-      },
+      { label: "Rich Results Test で再検証（/en）", href: "https://search.google.com/test/rich-results?url=https%3A%2F%2Fotherspacehotel.com%2Fen" },
+      { label: "Schema Markup Validator（/en/room）", href: "https://validator.schema.org/#url=https%3A%2F%2Fotherspacehotel.com%2Fen%2Froom" },
     ],
-    self:
-      "このポートフォリオ自身も ProfessionalService 型で構造化済み（View Source で確認可）。",
+    self: "このポートフォリオ自身も ProfessionalService 型で構造化済み（View Source で確認可）。",
   },
-
   hreflang: {
     title: "hreflang — 5言語 + x-default を全ページ相互リンク",
     body:
       "ロケール接頭辞ルーティング（/en /ja /ko /zh-CN /zh-TW）。各ページが x-default を含む全ロケールを相互参照し、検索エンジンに言語シグナルを明示します。",
     locales: ["x-default", "en", "ja", "ko", "zh-CN", "zh-TW"],
-    // 実装パターン（実機は View Source で確認可）。
     code: `<link rel="alternate" hreflang="x-default" href="https://otherspacehotel.com/en" />
 <link rel="alternate" hreflang="en"        href="https://otherspacehotel.com/en" />
 <link rel="alternate" hreflang="ja"        href="https://otherspacehotel.com/ja" />
@@ -138,8 +172,6 @@ export const techProof = {
 <link rel="alternate" hreflang="zh-CN"     href="https://otherspacehotel.com/zh-CN" />
 <link rel="alternate" hreflang="zh-TW"     href="https://otherspacehotel.com/zh-TW" />`,
   },
-
-  // 差別化軸＝検索。Lighthouse は検索最適化に直結する SEO / Best Practices のみ掲示。
   metrics: {
     title: "Lighthouse — 検索最適化カテゴリ",
     target: "otherspacehotel.com（モバイル・PageSpeed Insights 実測）",
@@ -152,29 +184,43 @@ export const techProof = {
   },
 };
 
-export const about = {
-  eyebrow: "About",
-  title: "ホテルの現場が分かる実装者です。",
-  lead:
-    "現職で浅草のホテル（OTHER SPACE Asakusa）の Web / SEO / オペレーションを担当。フロント実務を通じて、多言語ゲスト対応・予約導線・OTA と直予約の現実を肌で理解しています。その現場感覚を、検索とブランドの両面で効く実装に落とし込みます。",
-  pillars: [
+// EXPERIENCE ─ 縦タイムライン（プレースホルダ）。差し替えてください。
+export const experience = {
+  eyebrow: "Experience",
+  title: "経歴",
+  items: [
     {
-      title: "現場運用の視点",
-      body: "フロント実務の経験から、ゲストが実際に何でつまずくか・どこで予約を離脱するかを起点に設計します。",
+      period: "2024 — 現在",
+      role: "Web / SEO / オペレーション",
+      org: "OTHER SPACE Asakusa",
+      summary:
+        "94室ブティックホテルの自社サイト実装・運用、SEO/MEO/AIO戦略、フロント実務。多言語実装と GBP 運用で訪日インバウンド導線を整備。",
+      tags: ["Next.js", "Schema.org", "GBP", "Front desk"],
     },
     {
-      title: "本物の多言語実装",
-      body: "EN / KR / zh-TW / zh-CN。翻訳だけでなく、ロケールルーティング・hreflang・言語別構造化データまで実装します。",
+      period: "20XX — 20XX",
+      role: "（前職の役割を入力）",
+      org: "（前職の会社名）",
+      summary: "（前職の主要成果・スコープを入力）",
+      tags: [],
     },
     {
-      title: "検索・地図・AI 最適化",
-      body: "Next.js + Schema.org Hotel + AIO 構造対応。検索（SEO）・地図（MEO/GBP）・生成AI 各面で見つかる土台をつくります。",
-    },
-    {
-      title: "代理店の黒子として",
-      body: "Web 制作代理店からの再委託を前提に、貴社ブランドの裏側で多言語 / 構造化の実装部分を担います。",
+      period: "20XX — 20XX",
+      role: "（前々職の役割を入力）",
+      org: "（前々職の会社名）",
+      summary: "（前々職の主要成果・スコープを入力）",
+      tags: [],
     },
   ],
+};
+
+// CONNECT
+export const connect = {
+  eyebrow: "Get in touch",
+  bigText: "LET'S CONNECT",
+  lead:
+    "ホテル / 宿泊施設の多言語サイト実装、Schema.org 構造化、MEO 整備について、代理店パートナーからのお問い合わせを歓迎します。",
+  email: CONTACT_EMAIL,
 };
 
 export const contact = {

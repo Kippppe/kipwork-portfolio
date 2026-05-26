@@ -1,27 +1,30 @@
+"use client";
+
 import { techProof } from "../lib/content";
 import ShotImage from "./ShotImage";
+import FadeIn from "./FadeIn";
+import { motion } from "framer-motion";
 
-// Lighthouse 風スコアドーナツ。値で色を出し分け（≥90 緑 / 50-89 橙 / <50 赤）。
 function ScoreDonut({ label, value }: { label: string; value: number }) {
   const r = 34;
   const c = 2 * Math.PI * r;
-  const offset = c * (1 - value / 100);
-  const color =
-    value >= 90 ? "#0cce6b" : value >= 50 ? "#ffa400" : "#ff4e42";
   return (
     <div className="flex flex-col items-center">
       <svg viewBox="0 0 80 80" className="h-24 w-24" role="img" aria-label={`${label} ${value}`}>
-        <circle cx="40" cy="40" r={r} fill="none" stroke="#e7e5e4" strokeWidth="7" />
-        <circle
+        <circle cx="40" cy="40" r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="7" />
+        <motion.circle
           cx="40"
           cy="40"
           r={r}
           fill="none"
-          stroke={color}
+          stroke="var(--accent)"
           strokeWidth="7"
           strokeLinecap="round"
           strokeDasharray={c}
-          strokeDashoffset={offset}
+          initial={{ strokeDashoffset: c }}
+          whileInView={{ strokeDashoffset: c * (1 - value / 100) }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
           transform="rotate(-90 40 40)"
         />
         <text
@@ -29,18 +32,17 @@ function ScoreDonut({ label, value }: { label: string; value: number }) {
           y="40"
           dominantBaseline="central"
           textAnchor="middle"
-          className="fill-stone-900 font-bold"
+          className="font-display fill-[color:var(--foreground)] font-bold tabular"
           style={{ fontSize: "22px" }}
         >
           {value}
         </text>
       </svg>
-      <span className="mt-2 text-sm font-semibold text-stone-700">{label}</span>
+      <span className="mt-2 text-xs uppercase tracking-widest text-[color:var(--muted)]">{label}</span>
     </div>
   );
 }
 
-// hreflang 構造図（ハブ&スポーク）。中心＝各ページ、周囲＝6ロケールを相互リンク。
 function HreflangDiagram({ locales }: { locales: string[] }) {
   const cx = 320;
   const cy = 130;
@@ -56,77 +58,41 @@ function HreflangDiagram({ locales }: { locales: string[] }) {
     { x: right, y: ys[2] },
   ];
   return (
-    <svg
-      viewBox="0 0 640 260"
-      className="h-auto w-full"
-      role="img"
-      aria-label="hreflang 相互リンク構造図"
-    >
+    <svg viewBox="0 0 640 260" className="h-auto w-full" role="img" aria-label="hreflang 相互リンク構造図">
       <defs>
-        <marker
-          id="arrow"
-          viewBox="0 0 10 10"
-          refX="9"
-          refY="5"
-          markerWidth="6"
-          markerHeight="6"
-          orient="auto-start-reverse"
-        >
-          <path d="M0,0 L10,5 L0,10 z" className="fill-stone-400" />
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="rgba(255,255,255,0.4)" />
         </marker>
       </defs>
-
       {pos.map((p, i) => (
-        <line
+        <motion.line
           key={`l-${i}`}
           x1={cx}
           y1={cy}
           x2={p.x}
           y2={p.y}
-          className="stroke-stone-300"
+          stroke="rgba(255,255,255,0.15)"
           strokeWidth="1.5"
           markerStart="url(#arrow)"
           markerEnd="url(#arrow)"
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.8, delay: 0.1 + i * 0.07 }}
         />
       ))}
-
-      {/* 中心ハブ */}
       <g>
-        <rect x={cx - 56} y={cy - 22} width="112" height="44" rx="10" className="fill-teal-700" />
-        <text
-          x={cx}
-          y={cy}
-          dominantBaseline="central"
-          textAnchor="middle"
-          className="fill-white font-semibold"
-          style={{ fontSize: "14px" }}
-        >
+        <rect x={cx - 56} y={cy - 22} width="112" height="44" rx="10" fill="var(--accent)" />
+        <text x={cx} y={cy} dominantBaseline="central" textAnchor="middle" fill="#0a0a0a" className="font-semibold" style={{ fontSize: "13px" }}>
           各ページ
         </text>
       </g>
-
-      {/* ロケールノード */}
       {locales.map((loc, i) => {
         const p = pos[i];
         return (
           <g key={loc}>
-            <rect
-              x={p.x - 52}
-              y={p.y - 18}
-              width="104"
-              height="36"
-              rx="8"
-              className="fill-white stroke-stone-300"
-              strokeWidth="1.5"
-            />
-            <text
-              x={p.x}
-              y={p.y}
-              dominantBaseline="central"
-              textAnchor="middle"
-              className="fill-stone-800 font-mono"
-              style={{ fontSize: "13px" }}
-            >
+            <rect x={p.x - 52} y={p.y - 18} width="104" height="36" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+            <text x={p.x} y={p.y} dominantBaseline="central" textAnchor="middle" fill="rgba(237,237,237,0.9)" className="font-mono" style={{ fontSize: "12.5px" }}>
               {loc}
             </text>
           </g>
@@ -142,121 +108,117 @@ export default function TechProof() {
   const rest = schema.pages.filter((p) => !p.star);
 
   return (
-    <section id="proof" className="border-b border-stone-200 bg-stone-50/60">
-      <div className="mx-auto w-full max-w-5xl px-6 py-20 sm:py-24">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-teal-700">
-          {eyebrow}
-        </p>
-        <h2 className="text-2xl font-bold tracking-tight text-stone-900 sm:text-3xl">
-          {title}
-        </h2>
-        <p className="mt-4 max-w-3xl text-base leading-8 text-stone-600">{lead}</p>
+    <section id="proof" className="relative border-t border-white/5 px-6 py-32 sm:py-40">
+      <div className="mx-auto w-full max-w-6xl">
+        <FadeIn>
+          <p className="mb-6 text-xs uppercase tracking-[0.3em] text-[color:var(--muted)]">
+            <span className="mr-3 inline-block h-px w-8 align-middle bg-[color:var(--accent)]" />
+            {eyebrow}
+          </p>
+        </FadeIn>
+        <FadeIn delay={0.1}>
+          <h2 className="font-display text-3xl font-bold tracking-tight text-[color:var(--foreground)] sm:text-4xl md:text-5xl">
+            {title}
+          </h2>
+        </FadeIn>
+        <FadeIn delay={0.2}>
+          <p className="mt-6 max-w-3xl text-sm leading-7 text-[color:var(--muted)] sm:text-base">{lead}</p>
+        </FadeIn>
 
-        {/* ───────── Schema（主役） ───────── */}
-        <div className="mt-12">
-          <h3 className="text-lg font-semibold text-stone-900">{schema.title}</h3>
-          <p className="mt-3 max-w-3xl text-sm leading-7 text-stone-600">{schema.body}</p>
+        {/* Schema */}
+        <div className="mt-16">
+          <FadeIn>
+            <h3 className="font-display text-xl font-bold text-[color:var(--foreground)] sm:text-2xl">{schema.title}</h3>
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-[color:var(--foreground)]/80">{schema.body}</p>
+          </FadeIn>
 
-          {/* 数値サマリ（スクショが無くても証拠が成立する） */}
-          <div className="mt-6 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-stone-200 bg-stone-200">
-            {schema.pages.map((p) => (
-              <div key={p.path} className="bg-white p-4 text-center">
-                <div className="font-mono text-xs text-stone-500">{p.path}</div>
-                <div className="mt-1 text-2xl font-bold text-stone-900">{p.count}</div>
-                <div className="text-[11px] leading-4 text-stone-500">{p.highlight}</div>
-              </div>
-            ))}
-          </div>
+          <FadeIn delay={0.1}>
+            <div className="mt-8 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/5 sm:grid-cols-3">
+              {schema.pages.map((p) => (
+                <div key={p.path} className="bg-[color:var(--background)] p-5 text-center">
+                  <div className="font-mono text-xs text-[color:var(--muted)]">{p.path}</div>
+                  <div className="font-display mt-2 text-3xl font-bold text-[color:var(--accent)] tabular">{p.count}</div>
+                  <div className="mt-1 text-[11px] leading-4 text-[color:var(--muted)]">{p.highlight}</div>
+                </div>
+              ))}
+            </div>
+          </FadeIn>
 
-          {/* スクショ：/room を主役に大きく、残り2枚を下段 */}
           {star && (
-            <figure className="mt-6 overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm">
-              <div className="flex items-center gap-2 border-b border-stone-100 bg-teal-50/70 px-4 py-2.5">
-                <span className="rounded-full bg-teal-700 px-2 py-0.5 text-[11px] font-semibold text-white">
-                  主役
-                </span>
-                <span className="font-mono text-sm font-semibold text-stone-800">
-                  {star.path}
-                </span>
-                <span className="text-xs text-stone-600">
-                  {star.count} 件検出 · {star.highlight}
-                </span>
-              </div>
-              <ShotImage
-                src={star.img}
-                alt={`validator.schema.org ${star.path} の検出結果（${star.count}件・エラー0警告0）`}
-              />
-            </figure>
+            <FadeIn delay={0.15}>
+              <figure className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
+                <div className="flex items-center gap-2 border-b border-white/10 bg-white/5 px-4 py-2.5">
+                  <span className="rounded-full bg-[color:var(--accent)] px-2 py-0.5 text-[11px] font-semibold text-black">主役</span>
+                  <span className="font-mono text-sm font-semibold text-[color:var(--foreground)]">{star.path}</span>
+                  <span className="text-xs text-[color:var(--muted)]">{star.count} 件検出 · {star.highlight}</span>
+                </div>
+                <ShotImage src={star.img} alt={`validator.schema.org ${star.path} の検出結果`} />
+              </figure>
+            </FadeIn>
           )}
 
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            {rest.map((p) => (
-              <figure
-                key={p.path}
-                className="overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm"
-              >
-                <div className="flex items-center gap-2 border-b border-stone-100 px-4 py-2.5">
-                  <span className="font-mono text-sm font-semibold text-stone-800">
-                    {p.path}
-                  </span>
-                  <span className="text-xs text-stone-600">
-                    {p.count} 件 · {p.highlight}
-                  </span>
-                </div>
-                <ShotImage
-                  src={p.img}
-                  alt={`validator.schema.org ${p.path} の検出結果（${p.count}件・エラー0警告0）`}
-                />
-              </figure>
+            {rest.map((p, i) => (
+              <FadeIn key={p.path} delay={0.05 * i}>
+                <figure className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
+                  <div className="flex items-center gap-2 border-b border-white/10 px-4 py-2.5">
+                    <span className="font-mono text-sm font-semibold text-[color:var(--foreground)]">{p.path}</span>
+                    <span className="text-xs text-[color:var(--muted)]">{p.count} 件 · {p.highlight}</span>
+                  </div>
+                  <ShotImage src={p.img} alt={`validator.schema.org ${p.path} の検出結果`} />
+                </figure>
+              </FadeIn>
             ))}
           </div>
 
-          <p className="mt-4 text-xs leading-6 text-stone-500">{schema.caption}</p>
+          <p className="mt-4 text-xs leading-6 text-[color:var(--muted)]">{schema.caption}</p>
 
-          <div className="mt-5 flex flex-wrap gap-3">
-            {schema.verify.map((v) => (
-              <a
-                key={v.href}
-                href={v.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-full border border-teal-200 bg-white px-4 py-2 text-sm font-semibold text-teal-700 transition-colors hover:bg-teal-50"
-              >
-                {v.label}
-                <span aria-hidden>↗</span>
-              </a>
-            ))}
-          </div>
-          <p className="mt-3 text-xs text-stone-500">{schema.self}</p>
-        </div>
-
-        {/* ───────── hreflang + Lighthouse ───────── */}
-        <div className="mt-14 grid gap-8 lg:grid-cols-[1.5fr_1fr]">
-          {/* hreflang */}
-          <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
-            <h3 className="text-lg font-semibold text-stone-900">{hreflang.title}</h3>
-            <p className="mt-3 text-sm leading-7 text-stone-600">{hreflang.body}</p>
-
-            <div className="mt-5">
-              <HreflangDiagram locales={hreflang.locales} />
-            </div>
-
-            <pre className="mt-5 overflow-x-auto rounded-xl bg-stone-900 p-4 text-[12.5px] leading-6 text-stone-100">
-              <code className="font-mono">{hreflang.code}</code>
-            </pre>
-          </div>
-
-          {/* Lighthouse: SEO / Best Practices のみ */}
-          <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
-            <h3 className="text-lg font-semibold text-stone-900">{metrics.title}</h3>
-            <div className="mt-6 flex items-start justify-center gap-8">
-              {metrics.items.map((m) => (
-                <ScoreDonut key={m.label} label={m.label} value={m.value} />
+          <FadeIn delay={0.1}>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {schema.verify.map((v) => (
+                <a
+                  key={v.href}
+                  href={v.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.03] px-4 py-2 text-sm font-medium text-[color:var(--foreground)] transition-all hover:border-[color:var(--accent)] hover:text-[color:var(--accent)]"
+                >
+                  {v.label}
+                  <span aria-hidden>↗</span>
+                </a>
               ))}
             </div>
-            <p className="mt-6 text-xs leading-6 text-stone-500">{metrics.note}</p>
-            <p className="mt-2 text-[11px] text-stone-400">{metrics.target}</p>
-          </div>
+            <p className="mt-3 text-xs text-[color:var(--muted)]">{schema.self}</p>
+          </FadeIn>
+        </div>
+
+        {/* hreflang + Lighthouse */}
+        <div className="mt-16 grid gap-6 lg:grid-cols-[1.5fr_1fr]">
+          <FadeIn>
+            <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+              <h3 className="font-display text-xl font-bold text-[color:var(--foreground)]">{hreflang.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-[color:var(--foreground)]/80">{hreflang.body}</p>
+              <div className="mt-6">
+                <HreflangDiagram locales={hreflang.locales} />
+              </div>
+              <pre className="mt-5 overflow-x-auto rounded-xl border border-white/5 bg-[#06080c] p-4 text-[12.5px] leading-6 text-[color:var(--foreground)]/90">
+                <code className="font-mono">{hreflang.code}</code>
+              </pre>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.1}>
+            <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+              <h3 className="font-display text-xl font-bold text-[color:var(--foreground)]">{metrics.title}</h3>
+              <div className="mt-8 flex items-start justify-center gap-10">
+                {metrics.items.map((m) => (
+                  <ScoreDonut key={m.label} label={m.label} value={m.value} />
+                ))}
+              </div>
+              <p className="mt-6 text-xs leading-6 text-[color:var(--muted)]">{metrics.note}</p>
+              <p className="mt-2 text-[11px] text-[color:var(--muted)]/70">{metrics.target}</p>
+            </div>
+          </FadeIn>
         </div>
       </div>
     </section>

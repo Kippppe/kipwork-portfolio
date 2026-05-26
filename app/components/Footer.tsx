@@ -1,26 +1,34 @@
-import { brand, CONTACT_EMAIL } from "../lib/content";
+import { brand, CONTACT_EMAIL, nav } from "../lib/content";
 
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="border-t border-stone-200 bg-stone-50">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-2 px-6 py-10 text-sm text-stone-500 sm:flex-row sm:items-center sm:justify-between">
+    <footer className="border-t border-white/5 bg-[color:var(--background)]">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-12 text-sm text-[color:var(--muted)] sm:flex-row sm:items-center sm:justify-between">
         <p>
-          <span className="font-semibold text-stone-700">{brand.name}</span> ——{" "}
-          {brand.role}
-        </p>
-        <div className="flex items-center gap-4">
-          <a
-            href={`mailto:${CONTACT_EMAIL}`}
-            className="transition-colors hover:text-stone-900"
-          >
-            {CONTACT_EMAIL}
-          </a>
-          <span aria-hidden className="text-stone-300">
-            |
+          <span className="font-display font-semibold text-[color:var(--foreground)]">
+            {brand.name}
           </span>
-          <span>© {year} {brand.name}</span>
-        </div>
+          <span className="ml-3 hidden sm:inline">— {brand.role}</span>
+        </p>
+        <ul className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          {nav.map((n) => (
+            <li key={n.href}>
+              <a href={n.href} className="transition-colors hover:text-[color:var(--foreground)]">
+                {n.label}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="transition-colors hover:text-[color:var(--foreground)]"
+            >
+              {CONTACT_EMAIL}
+            </a>
+          </li>
+          <li className="text-xs">© {year} {brand.name}</li>
+        </ul>
       </div>
     </footer>
   );

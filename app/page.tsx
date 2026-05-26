@@ -1,13 +1,13 @@
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
-import CaseStudy from "./components/CaseStudy";
-import TechProof from "./components/TechProof";
 import About from "./components/About";
-import Contact from "./components/Contact";
+import Work from "./components/Work";
+import TechProof from "./components/TechProof";
+import Experience from "./components/Experience";
+import Connect from "./components/Connect";
 import Footer from "./components/Footer";
 import { SITE_URL, brand, CONTACT_EMAIL } from "./lib/content";
 
-// 自サイトの構造化データ。Schema 実装をうたう以上、自分のサイトでも実装する。
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
@@ -43,10 +43,11 @@ export default function Home() {
       <Nav />
       <main className="flex-1">
         <Hero />
-        <CaseStudy />
-        <TechProof />
         <About />
-        <Contact />
+        <Work />
+        <TechProof />
+        <Experience />
+        <Connect />
       </main>
       <Footer />
     </>
