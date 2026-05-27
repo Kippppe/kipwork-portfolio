@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ReactNode } from "react";
 
 type Props = {
@@ -27,6 +27,9 @@ export default function AnimatedHeading({
   highlight,
   children,
 }: Props) {
+  // reduced-motion 時は transform 系アニメをスキップ。
+  // 文字は overflow-hidden で隠れたままにならないよう初期位置を 0 にする。
+  const reduce = useReducedMotion();
   // grapheme 単位で分割（絵文字対応）
   const splitChars = (s: string) =>
     typeof Intl !== "undefined" && "Segmenter" in Intl
@@ -52,7 +55,7 @@ export default function AnimatedHeading({
             >
               <motion.span
                 className="inline-block"
-                initial={{ y: "110%" }}
+                initial={{ y: reduce ? "0%" : "110%" }}
                 whileInView={{ y: "0%" }}
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{ duration: 0.9, delay: li * lineStagger, ease: [0.22, 1, 0.36, 1] }}
@@ -69,7 +72,7 @@ export default function AnimatedHeading({
               <motion.span
                 key={ci}
                 className={`inline-block ${isAccent ? "text-[color:var(--accent)]" : ""}`}
-                initial={{ y: "100%", opacity: 0 }}
+                initial={{ y: reduce ? "0%" : "100%", opacity: 0 }}
                 whileInView={{ y: "0%", opacity: 1 }}
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{

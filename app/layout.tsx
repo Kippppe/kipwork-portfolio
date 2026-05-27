@@ -1,21 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { SITE_URL, brand } from "./lib/content";
 import CustomCursor from "./components/CustomCursor";
 import LenisProvider from "./components/LenisProvider";
 
+// 見出し・本文ともに Inter に統一（精密スケール：tracking で階層を作る）
 const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-display",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["500", "600", "700"],
 });
 
 const title = `${brand.name} — ${brand.role}`;
@@ -56,7 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="ja"
-      className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
+      className={`${inter.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <LenisProvider />

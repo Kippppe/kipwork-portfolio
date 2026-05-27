@@ -16,7 +16,15 @@ export default function ShotImage({ src, alt }: { src: string; alt: string }) {
   }
 
   return (
+    /* スクショは縦横比が画像ごとに不定のため next/image(fill) ではなく img + 遅延読込で対応 */
     /* eslint-disable-next-line @next/next/no-img-element */
-    <img src={src} alt={alt} className="w-full opacity-90" onError={() => setErr(true)} />
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+      className="w-full opacity-90"
+      onError={() => setErr(true)}
+    />
   );
 }

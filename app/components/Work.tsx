@@ -2,8 +2,10 @@
 
 import { work, techProof } from "../lib/content";
 import FadeIn from "./FadeIn";
+import PlaceholderBadge from "./PlaceholderBadge";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useState } from "react";
 
 export default function Work() {
@@ -13,9 +15,10 @@ export default function Work() {
         <div className="mb-16 flex items-end justify-between gap-8">
           <div>
             <FadeIn>
-              <p className="mb-6 text-xs uppercase tracking-[0.3em] text-[color:var(--muted)]">
-                <span className="mr-3 inline-block h-px w-8 align-middle bg-[color:var(--accent)]" />
+              <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-[color:var(--muted)]">
+                <span className="inline-block h-px w-8 bg-[color:var(--accent)]" />
                 {work.eyebrow}
+                <PlaceholderBadge editPath="content.ts → work.projects" />
               </p>
             </FadeIn>
             <FadeIn delay={0.1}>
@@ -42,7 +45,7 @@ export default function Work() {
             <FadeIn delay={0.2}>
               <a
                 href="#proof"
-                className="group relative flex h-full min-h-[420px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.02] to-transparent p-8 transition-colors hover:border-[color:var(--accent)]/40"
+                className="group relative flex h-full min-h-[420px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.02] to-transparent p-8 transition-[border-color,transform] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-[color:var(--accent)]/40 active:scale-[0.99]"
               >
                 <div>
                   <p className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">
@@ -80,18 +83,26 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         rel="noopener noreferrer"
         className="group relative block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]"
         whileHover="hover"
+        whileTap={{ scale: 0.99 }}
+        transition={{ type: "spring", stiffness: 400, damping: 30 }}
       >
         {/* カバー画像 */}
         <div className="relative aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[#1a0e14] via-[#0f0f1a] to-[#0a1518]">
           {imgOk ? (
-            <motion.img
-              src={project.cover}
-              alt={project.title}
-              onError={() => setImgOk(false)}
+            <motion.div
+              className="absolute inset-0"
               variants={{ hover: { scale: 1.06 } }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="h-full w-full object-cover"
-            />
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <Image
+                src={project.cover}
+                alt={project.title}
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                onError={() => setImgOk(false)}
+                className="object-cover"
+              />{/* hover zoom timing set on the motion wrapper below */}
+            </motion.div>
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="font-display text-6xl font-bold text-white/10">
@@ -100,6 +111,10 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             </div>
           )}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[color:var(--background)] via-[color:var(--background)]/30 to-transparent" />
+          {/* 編集バッジ：カバー画像 */}
+          <div className="absolute left-4 top-4 z-10">
+            <PlaceholderBadge editPath={`public${project.cover}`} label="差し替え" />
+          </div>
           {/* タイトル：ホバーでスライド上 */}
           <motion.div
             className="absolute bottom-5 left-5 right-5"

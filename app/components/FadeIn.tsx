@@ -26,13 +26,15 @@ export default function FadeIn({
   once = true,
 }: Props) {
   const reduce = useReducedMotion();
-  if (reduce) return <div className={className}>{children}</div>;
+  // reduced-motion 時は initial={false} で最終状態を即描画（whileInView 非依存）。
+  // SSR/hydration をまたいでも確実に可視化され、コンテンツが隠れない。
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, amount }}
+      initial={reduce ? false : { opacity: 0, y }}
+      animate={reduce ? { opacity: 1, y: 0 } : undefined}
+      whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+      viewport={reduce ? undefined : { once, amount }}
       transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}

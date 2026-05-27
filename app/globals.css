@@ -3,11 +3,14 @@
 :root {
   --background: #0a0a0a;
   --foreground: #ededed;
-  --muted: #888888;
+  --muted: #8a8f98;
   --line: rgba(255, 255, 255, 0.08);
-  --accent: #ff4d6d;
-  --accent-soft: rgba(255, 77, 109, 0.18);
-  --warm: #ff6b35;
+  --accent: #5e6ad2;
+  --accent-soft: rgba(94, 106, 210, 0.18);
+  --accent-2: #8b5cf6;
+  /* 強めのイージング（標準CSSは弱い）— UIインタラクション全体で共有 */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 @theme inline {
@@ -16,8 +19,8 @@
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-accent: var(--accent);
-  --color-warm: var(--warm);
-  --font-display: var(--font-display), "Inter Tight", system-ui, sans-serif;
+  --color-accent-2: var(--accent-2);
+  --font-display: var(--font-sans), "Inter", system-ui, sans-serif;
   --font-sans: var(--font-sans), "Inter", system-ui, sans-serif;
 }
 
@@ -40,14 +43,21 @@ body {
 }
 
 .font-display {
-  font-family: var(--font-display), "Inter Tight", system-ui, sans-serif;
-  font-feature-settings: "ss01", "ss02";
+  font-family: var(--font-display);
+  font-feature-settings: "ss01", "cv11";
   letter-spacing: -0.025em;
 }
 
 ::selection {
   background: var(--accent);
-  color: #0a0a0a;
+  color: #ffffff;
+}
+
+/* キーボードフォーカス：cursor:none 環境でも操作位置が分かるように */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 /* 微細グリッド */
@@ -96,7 +106,7 @@ body {
 }
 .glitch-hover:hover .glitch-layer-2 {
   animation: glitch-x 0.4s steps(2) infinite reverse;
-  color: #6b8cff;
+  color: var(--accent-2);
   mix-blend-mode: screen;
 }
 
@@ -116,10 +126,12 @@ body {
   background-size: 0% 1px;
   background-repeat: no-repeat;
   background-position: 0 100%;
-  transition: background-size 0.4s ease;
+  transition: background-size 0.25s var(--ease-out);
 }
-.link-underline:hover {
-  background-size: 100% 1px;
+@media (hover: hover) and (pointer: fine) {
+  .link-underline:hover {
+    background-size: 100% 1px;
+  }
 }
 
 .tabular {

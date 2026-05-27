@@ -33,13 +33,25 @@ export const nav = [
 ];
 
 // HERO ─ 大胆タイポでホテル特化×代理店黒子を打ち出す
+// 中央行は5言語で循環。サイト自身が hreflang を演じる self-referential 演出。
 export const hero = {
   eyebrow: "Hotel-specialized · Multilingual web",
   headlineEn: [
     "I build",
-    "multilingual hotel sites",
+    "multilingual hotel sites", // ← この行は MultilingualHeadline で循環表示される
     "that get found.",
   ],
+  // 中央行の多言語版。同じ意味を5言語で表記。
+  headlineCycle: [
+    { lang: "en",    text: "multilingual hotel sites", hreflang: "en" },
+    { lang: "ja",    text: "多言語ホテルサイト",         hreflang: "ja" },
+    { lang: "ko",    text: "다국어 호텔 사이트",          hreflang: "ko" },
+    { lang: "zh-CN", text: "多语言酒店网站",            hreflang: "zh-CN" },
+    { lang: "zh-TW", text: "多語言飯店網站",            hreflang: "zh-TW" },
+  ],
+  // 各言語の表示秒数 / 切替アニメ秒数
+  cycleDwell: 2.6,
+  cycleSwap: 0.55,
   headlineJa:
     "ホテルの現場が分かる、多言語実装エンジニア。",
   subhead:

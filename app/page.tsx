@@ -1,5 +1,6 @@
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
+import BuildingToJsonLd from "./components/BuildingToJsonLd";
 import About from "./components/About";
 import Work from "./components/Work";
 import TechProof from "./components/TechProof";
@@ -43,6 +44,7 @@ export default function Home() {
       <Nav />
       <main className="flex-1">
         <Hero />
+        <BuildingToJsonLd />
         <About />
         <Work />
         <TechProof />

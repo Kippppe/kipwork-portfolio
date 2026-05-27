@@ -22,9 +22,9 @@ export default function Connect() {
       id="connect"
       className="relative overflow-hidden border-t border-white/5 px-6 py-32 sm:py-48"
     >
-      {/* グロー */}
-      <div className="glow-orb left-[10%] top-[20%] h-[420px] w-[420px] bg-[radial-gradient(circle_at_center,#ff4d6d_0%,transparent_60%)]" />
-      <div className="glow-orb right-[5%] bottom-[10%] h-[460px] w-[460px] bg-[radial-gradient(circle_at_center,#7c4dff_0%,transparent_60%)]" />
+      {/* グロー（indigo 体系で統一） */}
+      <div className="glow-orb left-[10%] top-[20%] h-[420px] w-[420px] bg-[radial-gradient(circle_at_center,#5e6ad2_0%,transparent_60%)]" />
+      <div className="glow-orb right-[5%] bottom-[10%] h-[460px] w-[460px] bg-[radial-gradient(circle_at_center,#8b5cf6_0%,transparent_60%)]" />
       <div aria-hidden className="absolute inset-0 bg-noise" />
 
       <div className="relative mx-auto w-full max-w-6xl text-center">
@@ -70,6 +70,8 @@ export default function Connect() {
           <motion.a
             href={`mailto:${connect.email}`}
             whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
             className="mt-10 inline-flex h-14 items-center justify-center gap-3 rounded-full bg-[color:var(--foreground)] px-8 text-base font-semibold text-[color:var(--background)] transition-shadow hover:shadow-[0_8px_50px_rgba(237,237,237,0.25)]"
           >
             <Mail className="h-4 w-4" />
@@ -88,7 +90,7 @@ export default function Connect() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="group grid h-12 w-12 place-items-center rounded-full border border-white/15 text-[color:var(--muted)] transition-all hover:border-[color:var(--accent)] hover:text-[color:var(--accent)]"
+                    className="group grid h-12 w-12 place-items-center rounded-full border border-white/15 text-[color:var(--muted)] transition-[color,border-color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-[color:var(--accent)] hover:text-[color:var(--accent)] active:scale-95"
                   >
                     <Icon className="h-5 w-5 transition-transform group-hover:-translate-y-0.5" />
                   </a>

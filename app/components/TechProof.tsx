@@ -3,9 +3,10 @@
 import { techProof } from "../lib/content";
 import ShotImage from "./ShotImage";
 import FadeIn from "./FadeIn";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 function ScoreDonut({ label, value }: { label: string; value: number }) {
+  const reduce = useReducedMotion();
   const r = 34;
   const c = 2 * Math.PI * r;
   return (
@@ -21,7 +22,7 @@ function ScoreDonut({ label, value }: { label: string; value: number }) {
           strokeWidth="7"
           strokeLinecap="round"
           strokeDasharray={c}
-          initial={{ strokeDashoffset: c }}
+          initial={{ strokeDashoffset: reduce ? c * (1 - value / 100) : c }}
           whileInView={{ strokeDashoffset: c * (1 - value / 100) }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
@@ -44,6 +45,7 @@ function ScoreDonut({ label, value }: { label: string; value: number }) {
 }
 
 function HreflangDiagram({ locales }: { locales: string[] }) {
+  const reduce = useReducedMotion();
   const cx = 320;
   const cy = 130;
   const left = 116;
@@ -75,15 +77,15 @@ function HreflangDiagram({ locales }: { locales: string[] }) {
           strokeWidth="1.5"
           markerStart="url(#arrow)"
           markerEnd="url(#arrow)"
-          initial={{ pathLength: 0 }}
+          initial={{ pathLength: reduce ? 1 : 0 }}
           whileInView={{ pathLength: 1 }}
           viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.8, delay: 0.1 + i * 0.07 }}
+          transition={{ duration: 0.8, delay: reduce ? 0 : 0.1 + i * 0.07 }}
         />
       ))}
       <g>
         <rect x={cx - 56} y={cy - 22} width="112" height="44" rx="10" fill="var(--accent)" />
-        <text x={cx} y={cy} dominantBaseline="central" textAnchor="middle" fill="#0a0a0a" className="font-semibold" style={{ fontSize: "13px" }}>
+        <text x={cx} y={cy} dominantBaseline="central" textAnchor="middle" fill="#ffffff" className="font-semibold" style={{ fontSize: "13px" }}>
           各ページ
         </text>
       </g>
@@ -148,7 +150,7 @@ export default function TechProof() {
             <FadeIn delay={0.15}>
               <figure className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
                 <div className="flex items-center gap-2 border-b border-white/10 bg-white/5 px-4 py-2.5">
-                  <span className="rounded-full bg-[color:var(--accent)] px-2 py-0.5 text-[11px] font-semibold text-black">主役</span>
+                  <span className="rounded-full bg-[color:var(--accent)] px-2 py-0.5 text-[11px] font-semibold text-white">主役</span>
                   <span className="font-mono text-sm font-semibold text-[color:var(--foreground)]">{star.path}</span>
                   <span className="text-xs text-[color:var(--muted)]">{star.count} 件検出 · {star.highlight}</span>
                 </div>
@@ -181,7 +183,7 @@ export default function TechProof() {
                   href={v.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.03] px-4 py-2 text-sm font-medium text-[color:var(--foreground)] transition-all hover:border-[color:var(--accent)] hover:text-[color:var(--accent)]"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.03] px-4 py-2 text-sm font-medium text-[color:var(--foreground)] transition-[color,border-color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-[color:var(--accent)] hover:text-[color:var(--accent)] active:scale-[0.98]"
                 >
                   {v.label}
                   <span aria-hidden>↗</span>

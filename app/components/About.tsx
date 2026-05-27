@@ -3,6 +3,8 @@
 import { about } from "../lib/content";
 import FadeIn from "./FadeIn";
 import AnimatedHeading from "./AnimatedHeading";
+import PlaceholderBadge from "./PlaceholderBadge";
+import Image from "next/image";
 import { useState } from "react";
 
 export default function About() {
@@ -13,9 +15,10 @@ export default function About() {
       <div className="mx-auto grid w-full max-w-6xl gap-16 md:grid-cols-12">
         <div className="md:col-span-7">
           <FadeIn>
-            <p className="mb-6 text-xs uppercase tracking-[0.3em] text-[color:var(--muted)]">
-              <span className="mr-3 inline-block h-px w-8 align-middle bg-[color:var(--accent)]" />
+            <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-[color:var(--muted)]">
+              <span className="inline-block h-px w-8 bg-[color:var(--accent)]" />
               {about.eyebrow}
+              <PlaceholderBadge editPath="content.ts → about" />
             </p>
           </FadeIn>
 
@@ -58,13 +61,19 @@ export default function About() {
           <FadeIn delay={0.15}>
             <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent">
               {imgOk ? (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img
-                  src={about.portrait}
-                  alt="portrait"
-                  onError={() => setImgOk(false)}
-                  className="h-full w-full object-cover grayscale transition-all duration-700 hover:grayscale-0 hover:scale-[1.03]"
-                />
+                <>
+                  <Image
+                    src={about.portrait}
+                    alt="kip のポートレート"
+                    fill
+                    sizes="(min-width: 768px) 40vw, 100vw"
+                    onError={() => setImgOk(false)}
+                    className="object-cover grayscale transition-[filter,transform] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] hover:grayscale-0 hover:scale-[1.03]"
+                  />
+                  <div className="absolute left-4 top-4">
+                    <PlaceholderBadge editPath="public/me.jpg" label="差し替え" />
+                  </div>
+                </>
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center text-[color:var(--muted)]">
