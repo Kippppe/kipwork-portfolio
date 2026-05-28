@@ -107,7 +107,7 @@ export const work = {
       subtitle: "多言語ホテルサイト実装（5言語 / Schema 7型）",
       year: "2025",
       role: "Web / SEO / 実装",
-      cover: "/work/otherspace.jpg",
+      cover: "/work/otherspace.png",
       tech: ["Next.js", "App Router", "Schema.org", "hreflang", "tripla"],
       stats: [
         { value: "5", label: "言語" },
@@ -202,26 +202,26 @@ export const experience = {
   title: "経歴",
   items: [
     {
-      period: "2024 — 現在",
+      period: "2023 — 2025",
+      role: "Marketing & Sales",
+      org: "Canada Toronto",
+      summary: "カナダ留学にて Marketing & Sales を専攻。マーケティング、営業、消費者分析、ビジネス戦略を学習。多文化環境でのプロジェクトワークを通じ、英語でのコミュニケーション力とビジネス理解を強化。",
+      tags: ["Marketing Strategy","Sales","Business Communication","Cross-cultural Collaboration"],
+    },
+    {
+      period: "2025 — 2026",
+      role: "LP / SEO / コンテンツマーケティング Intern",
+      org: "Aied",
+      summary: "インターンとしてブログコンテンツ作成、営業補佐、LP作成、SEO施策を担当。Webコンテンツ運用とマーケティング支援を通じ、集客・情報発信業務に従事。",
+      tags: ["LP Creation", "SEO", "Content Writing", "Sales Support"],
+    },
+    {
+      period: "2025 — 現在",
       role: "Web / SEO / オペレーション",
       org: "OTHER SPACE Asakusa",
       summary:
         "94室ブティックホテルの自社サイト実装・運用、SEO/MEO/AIO戦略、フロント実務。多言語実装と GBP 運用で訪日インバウンド導線を整備。",
       tags: ["Next.js", "Schema.org", "GBP", "Front desk"],
-    },
-    {
-      period: "20XX — 20XX",
-      role: "（前職の役割を入力）",
-      org: "（前職の会社名）",
-      summary: "（前職の主要成果・スコープを入力）",
-      tags: [],
-    },
-    {
-      period: "20XX — 20XX",
-      role: "（前々職の役割を入力）",
-      org: "（前々職の会社名）",
-      summary: "（前々職の主要成果・スコープを入力）",
-      tags: [],
     },
   ],
 };
