@@ -6,11 +6,9 @@
   --muted: #8a8f98;
   --line: rgba(255, 255, 255, 0.08);
   --accent: #5e6ad2;
-  --accent-soft: rgba(94, 106, 210, 0.18);
   --accent-2: #8b5cf6;
-  /* 強めのイージング（標準CSSは弱い）— UIインタラクション全体で共有 */
+  /* 強めのイージング（標準CSSは弱い）— UIインタラクション全体で共有（Tailwind: ease-[var(--ease-out)]） */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 @theme inline {
@@ -118,20 +116,6 @@ body {
 }
 .scroll-hint span {
   animation: scroll-hint 1.8s ease-in-out infinite;
-}
-
-/* リンク下線 */
-.link-underline {
-  background-image: linear-gradient(var(--accent), var(--accent));
-  background-size: 0% 1px;
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  transition: background-size 0.25s var(--ease-out);
-}
-@media (hover: hover) and (pointer: fine) {
-  .link-underline:hover {
-    background-size: 100% 1px;
-  }
 }
 
 .tabular {

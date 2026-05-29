@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { ReactNode } from "react";
+import { EASE_OUT } from "../lib/motion";
 
 type Props = {
   children: ReactNode;
@@ -35,7 +36,7 @@ export default function FadeIn({
       animate={reduce ? { opacity: 1, y: 0 } : undefined}
       whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
       viewport={reduce ? undefined : { once, amount }}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, delay, ease: EASE_OUT }}
     >
       {children}
     </motion.div>

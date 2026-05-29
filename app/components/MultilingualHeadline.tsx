@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { EASE_OUT } from "../lib/motion";
+import { splitGraphemes } from "../lib/text";
 
 export type HeadlineVariant = {
   lang: string;
@@ -17,19 +19,6 @@ type Props = {
   onChange?: (v: HeadlineVariant) => void;
   className?: string;
 };
-
-// grapheme 分割（CJK と Latin 両対応）
-function splitGraphemes(s: string): string[] {
-  if (typeof Intl !== "undefined" && "Segmenter" in Intl) {
-    const Seg = (Intl as unknown as {
-      Segmenter: new (l: string, o: object) => {
-        segment: (s: string) => Iterable<{ segment: string }>;
-      };
-    }).Segmenter;
-    return Array.from(new Seg("ja", { granularity: "grapheme" }).segment(s), (g) => g.segment);
-  }
-  return Array.from(s);
-}
 
 /**
  * 5言語の見出しを文字単位で glitch swap して循環。
@@ -85,7 +74,7 @@ export default function MultilingualHeadline({
           initial={reduce ? { opacity: 0 } : undefined}
           animate={reduce ? { opacity: 1 } : undefined}
           exit={reduce ? { opacity: 0 } : undefined}
-          transition={{ duration: swap, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: swap, ease: EASE_OUT }}
         >
           {chars.map((c, ci) => (
             <motion.span
@@ -109,7 +98,7 @@ export default function MultilingualHeadline({
               transition={{
                 duration: swap,
                 delay: reduce ? 0 : ci * 0.022,
-                ease: [0.22, 1, 0.36, 1],
+                ease: EASE_OUT,
               }}
               style={{ whiteSpace: c === " " ? "pre" : "normal" }}
             >

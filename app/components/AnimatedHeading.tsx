@@ -2,6 +2,8 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { ReactNode } from "react";
+import { EASE_OUT } from "../lib/motion";
+import { splitGraphemes } from "../lib/text";
 
 type Props = {
   lines: string[]; // 1行ずつ
@@ -30,14 +32,6 @@ export default function AnimatedHeading({
   // reduced-motion 時は transform 系アニメをスキップ。
   // 文字は overflow-hidden で隠れたままにならないよう初期位置を 0 にする。
   const reduce = useReducedMotion();
-  // grapheme 単位で分割（絵文字対応）
-  const splitChars = (s: string) =>
-    typeof Intl !== "undefined" && "Segmenter" in Intl
-      ? Array.from(
-          new (Intl as unknown as { Segmenter: new (l: string, o: object) => { segment: (s: string) => Iterable<{ segment: string }> } }).Segmenter("ja", { granularity: "grapheme" }).segment(s),
-          (g) => g.segment
-        )
-      : Array.from(s);
 
   return (
     <Tag className={className}>
@@ -51,21 +45,21 @@ export default function AnimatedHeading({
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.6, delay: li * lineStagger, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, delay: li * lineStagger, ease: EASE_OUT }}
             >
               <motion.span
                 className="inline-block"
                 initial={{ y: reduce ? "0%" : "110%" }}
                 whileInView={{ y: "0%" }}
                 viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.9, delay: li * lineStagger, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.9, delay: li * lineStagger, ease: EASE_OUT }}
               >
                 {line}
               </motion.span>
             </motion.span>
           );
         }
-        const chars = splitChars(line);
+        const chars = splitGraphemes(line);
         return (
           <span key={li} className="block">
             {chars.map((c, ci) => (
@@ -78,7 +72,7 @@ export default function AnimatedHeading({
                 transition={{
                   duration: 0.6,
                   delay: li * lineStagger + ci * charStagger,
-                  ease: [0.22, 1, 0.36, 1],
+                  ease: EASE_OUT,
                 }}
                 style={{ whiteSpace: c === " " ? "pre" : "normal" }}
               >

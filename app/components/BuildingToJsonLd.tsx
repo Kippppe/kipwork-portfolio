@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import {
   motion,
   useScroll,
@@ -9,7 +9,7 @@ import {
   useMotionValueEvent,
   MotionValue,
 } from "framer-motion";
-import { useState, type ReactNode } from "react";
+import Eyebrow from "./Eyebrow";
 
 /**
  * スクロール連動：ホテル建物 SVG → JSON-LD コードへの morph。
@@ -319,10 +319,7 @@ export default function BuildingToJsonLd() {
 function SectionHeader() {
   return (
     <>
-      <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-[color:var(--muted)]">
-        <span className="inline-block h-px w-8 bg-[color:var(--accent)]" />
-        The Translation
-      </p>
+      <Eyebrow>The Translation</Eyebrow>
       <h2 className="font-display text-2xl font-bold tracking-tight text-[color:var(--foreground)] sm:text-3xl md:text-4xl">
         物理ホテルを、検索が読める構造に翻訳する。
       </h2>

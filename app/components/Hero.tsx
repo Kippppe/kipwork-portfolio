@@ -6,6 +6,7 @@ import AnimatedHeading from "./AnimatedHeading";
 import MultilingualHeadline, { HeadlineVariant } from "./MultilingualHeadline";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
+import { EASE_OUT } from "../lib/motion";
 
 export default function Hero() {
   const [current, setCurrent] = useState<HeadlineVariant>(hero.headlineCycle[0]);
@@ -28,7 +29,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.7, ease: EASE_OUT }}
           className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-3.5 py-1.5 text-xs uppercase tracking-[0.18em] text-[color:var(--muted)]"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--accent)]" />
@@ -98,7 +99,7 @@ export default function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, delay: 0.9, ease: EASE_OUT }}
           className="mt-8 max-w-2xl text-base leading-8 text-[color:var(--foreground)]/85 sm:text-lg"
         >
           {hero.headlineJa}
@@ -107,7 +108,7 @@ export default function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, delay: 1.0, ease: EASE_OUT }}
           className="mt-4 max-w-2xl text-sm leading-7 text-[color:var(--muted)] sm:text-base"
         >
           {hero.subhead}
@@ -135,19 +136,19 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.3, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, delay: 1.3, ease: EASE_OUT }}
           className="mt-12 flex flex-col gap-3 sm:flex-row"
         >
           <a
             href={hero.primaryCta.href}
-            className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[color:var(--accent)] px-7 text-sm font-semibold text-white transition-[transform,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:scale-[1.02] hover:shadow-[0_8px_40px_rgba(94,106,210,0.45)] active:scale-[0.97]"
+            className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[color:var(--accent)] px-7 text-sm font-semibold text-white transition-[transform,box-shadow] duration-200 ease-[var(--ease-out)] hover:scale-[1.02] hover:shadow-[0_8px_40px_rgba(94,106,210,0.45)] active:scale-[0.97]"
           >
             {hero.primaryCta.label}
             <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
           <a
             href={hero.secondaryCta.href}
-            className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 bg-transparent px-7 text-sm font-semibold text-[color:var(--foreground)] transition-[transform,background-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-white/[0.04] active:scale-[0.97]"
+            className="inline-flex h-12 items-center justify-center rounded-full border border-white/20 bg-transparent px-7 text-sm font-semibold text-[color:var(--foreground)] transition-[transform,background-color] duration-200 ease-[var(--ease-out)] hover:bg-white/[0.04] active:scale-[0.97]"
           >
             {hero.secondaryCta.label}
           </a>

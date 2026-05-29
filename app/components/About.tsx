@@ -3,6 +3,7 @@
 import { about } from "../lib/content";
 import FadeIn from "./FadeIn";
 import AnimatedHeading from "./AnimatedHeading";
+import Eyebrow from "./Eyebrow";
 import PlaceholderBadge from "./PlaceholderBadge";
 import Image from "next/image";
 import { useState } from "react";
@@ -15,11 +16,10 @@ export default function About() {
       <div className="mx-auto grid w-full max-w-6xl gap-16 md:grid-cols-12">
         <div className="md:col-span-7">
           <FadeIn>
-            <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-[color:var(--muted)]">
-              <span className="inline-block h-px w-8 bg-[color:var(--accent)]" />
+            <Eyebrow>
               {about.eyebrow}
               <PlaceholderBadge editPath="content.ts → about" />
-            </p>
+            </Eyebrow>
           </FadeIn>
 
           <AnimatedHeading
@@ -68,7 +68,7 @@ export default function About() {
                     fill
                     sizes="(min-width: 768px) 40vw, 100vw"
                     onError={() => setImgOk(false)}
-                    className="object-cover grayscale transition-[filter,transform] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] hover:grayscale-0 hover:scale-[1.03]"
+                    className="object-cover grayscale transition-[filter,transform] duration-500 ease-[var(--ease-out)] hover:grayscale-0 hover:scale-[1.03]"
                   />
                   <div className="absolute left-4 top-4">
                     <PlaceholderBadge editPath="public/me.jpg" label="差し替え" />

@@ -2,8 +2,11 @@
 
 import { experience } from "../lib/content";
 import FadeIn from "./FadeIn";
+import Eyebrow from "./Eyebrow";
+import Tag from "./Tag";
 import PlaceholderBadge from "./PlaceholderBadge";
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE_OUT } from "../lib/motion";
 
 // sentinel判定：データが未差し替えかどうか
 function isPlaceholder(period: string) {
@@ -16,11 +19,10 @@ export default function Experience() {
     <section id="experience" className="relative border-t border-white/5 px-6 py-32 sm:py-40">
       <div className="mx-auto w-full max-w-6xl">
         <FadeIn>
-          <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-[color:var(--muted)]">
-            <span className="inline-block h-px w-8 bg-[color:var(--accent)]" />
+          <Eyebrow>
             {experience.eyebrow}
             <PlaceholderBadge editPath="content.ts → experience.items" />
-          </p>
+          </Eyebrow>
         </FadeIn>
         <FadeIn delay={0.1}>
           <h2 className="font-display text-3xl font-bold tracking-tight text-[color:var(--foreground)] sm:text-4xl md:text-5xl">
@@ -34,7 +36,7 @@ export default function Experience() {
             initial={{ scaleY: reduce ? 1 : 0 }}
             whileInView={{ scaleY: 1 }}
             viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.2, ease: EASE_OUT }}
             style={{ transformOrigin: "top" }}
             className="absolute left-3 top-2 h-full w-px bg-gradient-to-b from-[color:var(--accent)] via-white/10 to-transparent"
           />
@@ -47,7 +49,7 @@ export default function Experience() {
                   initial={{ scale: reduce ? 1 : 0.4, opacity: reduce ? 1 : 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true, amount: 0.6 }}
-                  transition={{ duration: 0.4, delay: reduce ? 0 : 0.1 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.4, delay: reduce ? 0 : 0.1 + i * 0.1, ease: EASE_OUT }}
                   className="absolute left-0 top-1.5 grid h-7 w-7 place-items-center rounded-full border border-white/15 bg-[color:var(--background)]"
                 >
                   <span className="h-2 w-2 rounded-full bg-[color:var(--accent)]" />
@@ -70,12 +72,7 @@ export default function Experience() {
                   {item.tags.length > 0 && (
                     <div className="mt-4 flex flex-wrap gap-1.5">
                       {item.tags.map((t) => (
-                        <span
-                          key={t}
-                          className="rounded-full border border-white/10 px-2.5 py-1 text-[10px] uppercase tracking-wider text-[color:var(--muted)]"
-                        >
-                          {t}
-                        </span>
+                        <Tag key={t}>{t}</Tag>
                       ))}
                     </div>
                   )}

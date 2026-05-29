@@ -3,7 +3,9 @@
 import { techProof } from "../lib/content";
 import ShotImage from "./ShotImage";
 import FadeIn from "./FadeIn";
+import Eyebrow from "./Eyebrow";
 import { motion, useReducedMotion } from "framer-motion";
+import { EASE_OUT } from "../lib/motion";
 
 function ScoreDonut({ label, value }: { label: string; value: number }) {
   const reduce = useReducedMotion();
@@ -25,7 +27,7 @@ function ScoreDonut({ label, value }: { label: string; value: number }) {
           initial={{ strokeDashoffset: reduce ? c * (1 - value / 100) : c }}
           whileInView={{ strokeDashoffset: c * (1 - value / 100) }}
           viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1.4, ease: EASE_OUT }}
           transform="rotate(-90 40 40)"
         />
         <text
@@ -113,10 +115,7 @@ export default function TechProof() {
     <section id="proof" className="relative border-t border-white/5 px-6 py-32 sm:py-40">
       <div className="mx-auto w-full max-w-6xl">
         <FadeIn>
-          <p className="mb-6 text-xs uppercase tracking-[0.3em] text-[color:var(--muted)]">
-            <span className="mr-3 inline-block h-px w-8 align-middle bg-[color:var(--accent)]" />
-            {eyebrow}
-          </p>
+          <Eyebrow>{eyebrow}</Eyebrow>
         </FadeIn>
         <FadeIn delay={0.1}>
           <h2 className="font-display text-3xl font-bold tracking-tight text-[color:var(--foreground)] sm:text-4xl md:text-5xl">
@@ -183,7 +182,7 @@ export default function TechProof() {
                   href={v.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.03] px-4 py-2 text-sm font-medium text-[color:var(--foreground)] transition-[color,border-color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-[color:var(--accent)] hover:text-[color:var(--accent)] active:scale-[0.98]"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.03] px-4 py-2 text-sm font-medium text-[color:var(--foreground)] transition-[color,border-color,transform] duration-200 ease-[var(--ease-out)] hover:border-[color:var(--accent)] hover:text-[color:var(--accent)] active:scale-[0.98]"
                 >
                   {v.label}
                   <span aria-hidden>↗</span>

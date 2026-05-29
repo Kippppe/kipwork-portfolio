@@ -6,6 +6,7 @@ import { XBrandIcon, GitHubIcon, LinkedInIcon, NoteIcon } from "./SocialIcons";
 import FadeIn from "./FadeIn";
 import { motion } from "framer-motion";
 import { SVGProps, ComponentType } from "react";
+import { SPRING_SNAP } from "../lib/motion";
 
 type IconCmp = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -71,7 +72,7 @@ export default function Connect() {
             href={`mailto:${connect.email}`}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            transition={SPRING_SNAP}
             className="mt-10 inline-flex h-14 items-center justify-center gap-3 rounded-full bg-[color:var(--foreground)] px-8 text-base font-semibold text-[color:var(--background)] transition-shadow hover:shadow-[0_8px_50px_rgba(237,237,237,0.25)]"
           >
             <Mail className="h-4 w-4" />
@@ -90,7 +91,7 @@ export default function Connect() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="group grid h-12 w-12 place-items-center rounded-full border border-white/15 text-[color:var(--muted)] transition-[color,border-color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-[color:var(--accent)] hover:text-[color:var(--accent)] active:scale-95"
+                    className="group grid h-12 w-12 place-items-center rounded-full border border-white/15 text-[color:var(--muted)] transition-[color,border-color,transform] duration-200 ease-[var(--ease-out)] hover:border-[color:var(--accent)] hover:text-[color:var(--accent)] active:scale-95"
                   >
                     <Icon className="h-5 w-5 transition-transform group-hover:-translate-y-0.5" />
                   </a>

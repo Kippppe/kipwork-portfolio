@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
+import { SPRING_SNAP } from "../lib/motion";
 
 /**
  * カスタムカーソル：
@@ -33,7 +34,6 @@ export default function CustomCursor() {
   const y = useMotionValue(-100);
   const sx = useSpring(x, { stiffness: 500, damping: 40, mass: 0.4 });
   const sy = useSpring(y, { stiffness: 500, damping: 40, mass: 0.4 });
-  const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!enabled) return;
@@ -69,7 +69,6 @@ export default function CustomCursor() {
         style={{ x: sx, y: sy }}
       >
         <motion.div
-          ref={ringRef}
           className="rounded-full border border-white"
           animate={{
             width: hovered ? 44 : 18,
@@ -78,7 +77,7 @@ export default function CustomCursor() {
             y: hovered ? -22 : -9,
             backgroundColor: hovered ? "rgba(255,255,255,1)" : "rgba(255,255,255,0)",
           }}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          transition={SPRING_SNAP}
         />
       </motion.div>
       {/* 中央のドット（hovered時に消える） */}
