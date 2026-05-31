@@ -118,7 +118,7 @@ function BuildingSvg({ progress, reduced }: { progress: MotionValue<number>; red
         {/* 屋根サイン */}
         <rect x="100" y="40" width="200" height="34" rx="2" />
         <text x="200" y="63" textAnchor="middle" fill="rgba(237,237,237,0.9)" stroke="none" className="font-display" textLength={180} lengthAdjust="spacingAndGlyphs" style={{ fontSize: "11px" }}>
-          94-ROOM BOUTIQUE HOTEL
+          BOUTIQUE HOTEL
         </text>
         {/* 星 */}
         <g fill="var(--accent)" stroke="none">

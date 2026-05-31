@@ -97,7 +97,7 @@ export const work = {
   projects: [
     {
       slug: "otherspace",
-      title: "OTHER SPACE Asakusa",
+      title: "OTHER SPACE Hotel Asakusa",
       subtitle: "多言語ホテルサイト実装（5言語 / Schema 7型）",
       year: "2025",
       role: "Web / SEO / 実装",
@@ -110,7 +110,7 @@ export const work = {
       ],
       url: "https://otherspacehotel.com",
       summary:
-        "94室のブティックホテル向けに Next.js (App Router) で5言語サイトを実装。Schema.org 7タイプを検証エラー0で全ページ展開、hreflang で訪日インバウンドの多言語導線を整備。",
+        "OTHER SPACE Hotel Asakusa向けに Next.js (App Router) で5言語サイトを実装。Schema.org 7タイプを検証エラー0で全ページ展開、hreflang で訪日インバウンドの多言語導線を整備。",
     },
   ],
 };
@@ -185,7 +185,7 @@ export const experience = {
       role: "Web / SEO / オペレーション",
       org: "OTHER SPACE Asakusa",
       summary:
-        "94室ブティックホテルの自社サイト実装・運用、SEO/MEO/AIO戦略、フロント実務。多言語実装と GBP 運用で訪日インバウンド導線を整備。",
+        "OTHER SPACE Hotel Asakusaの自社サイト実装・運用、SEO/MEO/AIO戦略、フロント実務。多言語実装と GBP 運用で訪日インバウンド導線を整備。",
       tags: ["Next.js", "Schema.org", "GBP", "Front desk"],
     },
   ],
