@@ -57,9 +57,9 @@ export default function MultilingualHeadline({
       className={`relative inline-block align-baseline ${className}`}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
-      // SR向けには現在のテキストを読み上げる
-      aria-live="polite"
-      aria-label={current.text}
+      // 循環アニメは装飾。SR には安定した意味（先頭=英語表記）を一度だけ伝え、
+      // aria-live は付けない（2.6秒ごとの再読み上げノイズを防ぐ）。
+      aria-label={variants[0]?.text ?? current.text}
     >
       {/* レイアウト崩れ防止：最長言語幅を占有する不可視テキスト */}
       <span aria-hidden className="invisible whitespace-nowrap">
