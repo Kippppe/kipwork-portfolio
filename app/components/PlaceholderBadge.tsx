@@ -3,12 +3,12 @@
 import { FileEdit } from "lucide-react";
 
 /**
- * 編集ポイントを示す浮遊バッジ。
+ * 編集ポイントを示す浮遊バッジ（開発時のみ表示）。
  * `editPath` を渡すと、どのファイルのどこを編集すれば良いかが分かる。
  * 例: <PlaceholderBadge editPath="content.ts → experience.items[1]" />
  *
- * 本番に出ても情報的価値があるが、商用デプロイ時に隠したい場合は
- * NEXT_PUBLIC_HIDE_PLACEHOLDERS=1 を設定。
+ * 本番ビルドでは常に非表示（公開ポートフォリオを汚さない）。
+ * 開発時にも隠したい場合は NEXT_PUBLIC_HIDE_PLACEHOLDERS=1 を設定。
  */
 export default function PlaceholderBadge({
   editPath,
@@ -19,6 +19,8 @@ export default function PlaceholderBadge({
   label?: string;
   className?: string;
 }) {
+  // 本番では出さない。NODE_ENV はビルド時にインライン化され、prod では分岐ごと除去される。
+  if (process.env.NODE_ENV === "production") return null;
   if (process.env.NEXT_PUBLIC_HIDE_PLACEHOLDERS === "1") return null;
   return (
     <span

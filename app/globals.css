@@ -83,6 +83,14 @@ body {
   pointer-events: none;
 }
 
+/* モバイルでは球が画面を覆い過ぎるため発色を抑える */
+@media (max-width: 640px) {
+  .glow-orb {
+    opacity: 0.3;
+    filter: blur(90px);
+  }
+}
+
 /* カスタムカーソル：標準カーソルを薄く（モバイルは無効） */
 @media (hover: hover) and (pointer: fine) {
   body { cursor: none; }

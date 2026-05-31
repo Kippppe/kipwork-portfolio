@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, type TargetAndTransition, type Transition } from "framer-motion";
 import { ReactNode } from "react";
 import { EASE_OUT } from "../lib/motion";
 import { splitGraphemes } from "../lib/text";
@@ -16,6 +16,13 @@ type Props = {
   byLine?: boolean;
   as?: "h1" | "h2" | "h3" | "p" | "div";
   highlight?: string; // この文字列を含むトークンだけアクセント色に
+  /**
+   * true（既定）: スクロールで viewport に入った時に発火（whileInView）。
+   * false: マウント時に即発火（animate）。ファーストビューの見出しに使う。
+   * whileInView は IntersectionObserver 依存で、何らかの理由で発火しないと
+   * initial の opacity:0 のまま不可視になり得る。ヒーローでは false を渡して回避する。
+   */
+  inView?: boolean;
   children?: ReactNode;
 };
 
@@ -27,11 +34,18 @@ export default function AnimatedHeading({
   byLine = false,
   as: Tag = "h1",
   highlight,
+  inView = true,
   children,
 }: Props) {
   // reduced-motion 時は transform 系アニメをスキップ。
   // 文字は overflow-hidden で隠れたままにならないよう初期位置を 0 にする。
   const reduce = useReducedMotion();
+
+  // inView=false の時はマウント時 animate、true の時は whileInView + viewport。
+  const reveal = (to: TargetAndTransition, transition: Transition) =>
+    inView
+      ? { whileInView: to, viewport: { once: true, amount: 0.4 } as const, transition }
+      : { animate: to, transition };
 
   return (
     <Tag className={className}>
@@ -43,16 +57,12 @@ export default function AnimatedHeading({
               key={li}
               className={`block overflow-hidden ${isAccent ? "text-[color:var(--accent)]" : ""}`}
               initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.6, delay: li * lineStagger, ease: EASE_OUT }}
+              {...reveal({ opacity: 1 }, { duration: 0.6, delay: li * lineStagger, ease: EASE_OUT })}
             >
               <motion.span
                 className="inline-block"
                 initial={{ y: reduce ? "0%" : "110%" }}
-                whileInView={{ y: "0%" }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.9, delay: li * lineStagger, ease: EASE_OUT }}
+                {...reveal({ y: "0%" }, { duration: 0.9, delay: li * lineStagger, ease: EASE_OUT })}
               >
                 {line}
               </motion.span>
@@ -67,13 +77,14 @@ export default function AnimatedHeading({
                 key={ci}
                 className={`inline-block ${isAccent ? "text-[color:var(--accent)]" : ""}`}
                 initial={{ y: reduce ? "0%" : "100%", opacity: 0 }}
-                whileInView={{ y: "0%", opacity: 1 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{
-                  duration: 0.6,
-                  delay: li * lineStagger + ci * charStagger,
-                  ease: EASE_OUT,
-                }}
+                {...reveal(
+                  { y: "0%", opacity: 1 },
+                  {
+                    duration: 0.6,
+                    delay: li * lineStagger + ci * charStagger,
+                    ease: EASE_OUT,
+                  },
+                )}
                 style={{ whiteSpace: c === " " ? "pre" : "normal" }}
               >
                 {c}

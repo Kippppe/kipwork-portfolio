@@ -42,15 +42,19 @@ export default function Hero() {
           lines={[hero.headlineEn[0]]}
           byLine
           lineStagger={0}
+          inView={false}
           className="font-display text-[clamp(2.5rem,8vw,7rem)] font-bold leading-[0.95] tracking-tight text-[color:var(--foreground)]"
         />
 
-        {/* 見出し2行目：5言語循環（self-referential hreflang） */}
+        {/* 見出し2行目：5言語循環（self-referential hreflang）
+            循環テキストは whitespace-nowrap で最長言語幅を確保するため、
+            短い1・3行目より控えめなクランプにしてビューポート幅を超えない様にする
+            （max-w-6xl 内に必ず収め、overflow-x クリップを防ぐ）。 */}
         <motion.div
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.4 }}
-          className="font-display relative text-[clamp(2.5rem,8vw,7rem)] font-bold leading-[0.95] tracking-tight text-[color:var(--accent)]"
+          className="font-display relative text-[clamp(1.5rem,6vw,5rem)] font-bold leading-[1.05] tracking-tight text-[color:var(--accent)]"
         >
           <MultilingualHeadline
             variants={hero.headlineCycle}
@@ -67,6 +71,7 @@ export default function Hero() {
             lines={[hero.headlineEn[2]]}
             byLine
             lineStagger={0}
+            inView={false}
             className="font-display text-[clamp(2.5rem,8vw,7rem)] font-bold leading-[0.95] tracking-tight text-[color:var(--foreground)]"
           />
         </div>
