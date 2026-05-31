@@ -34,7 +34,7 @@ const codeLines = [
   { t: `{`,                                                              k: "open" },
   { t: `  "@context": "https://schema.org",`,                            k: "ctx" },
   { t: `  "@type": "Hotel",`,                                            k: "type" },
-  { t: `  "name": "OTHER SPACE Asakusa",`,                               k: "name" },
+  { t: `  "name": "BOUTIQUE HOTEL",`,                               k: "name" },
   { t: `  "starRating": { "ratingValue": "4.5" },`,                      k: "star" },
   { t: `  "numberOfRooms": 94,`,                                         k: "rooms" },
   { t: `  "address": {`,                                                 k: "addr-open" },
@@ -117,8 +117,8 @@ function BuildingSvg({ progress, reduced }: { progress: MotionValue<number>; red
       <motion.g style={{ opacity: reduced ? 1 : bodyOpacity }} stroke="rgba(237,237,237,0.85)" strokeWidth="1.4" fill="none">
         {/* 屋根サイン */}
         <rect x="100" y="40" width="200" height="34" rx="2" />
-        <text x="200" y="63" textAnchor="middle" fill="rgba(237,237,237,0.9)" stroke="none" className="font-display" style={{ fontSize: "13px", letterSpacing: "0.18em" }}>
-          OTHER SPACE
+        <text x="200" y="63" textAnchor="middle" fill="rgba(237,237,237,0.9)" stroke="none" className="font-display" textLength={180} lengthAdjust="spacingAndGlyphs" style={{ fontSize: "11px" }}>
+          94-ROOM BOUTIQUE HOTEL
         </text>
         {/* 星 */}
         <g fill="var(--accent)" stroke="none">
